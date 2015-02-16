@@ -14,16 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
-#pragma once
+#include "stdafx.h"
 
-// Compilation Controlling Header Files:
+extern "C" int WSAAPI ipx_bind(SOCKET s, const sockaddr *name, int namelen)
+{
+    if (name->sa_family == AF_IPX) {
+        sockaddr_in addr = {0};
 
-#include "targetver.h"
+        addr.sin_family = AF_INET;
+        addr.sin_port = reinterpret_cast<const sockaddr_ipx *>(name)->sa_socket;
+        addr.sin_addr.S_un.S_addr = INADDR_ANY;
 
-// Windows Header Files:
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-#include <winsock2.h>
-#include <wsipx.h>
+        return ::bind(s, reinterpret_cast<sockaddr *>(&addr), sizeof(addr));
+    } else {
+        return ::bind(s, name, namelen);
+    }
+}

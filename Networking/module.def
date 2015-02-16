@@ -1,0 +1,7 @@
+EXPORTS
+    accept=ws2_32.accept            @1
+    bind=ipx_bind                   @2
+    closesocket=ws2_32.closesocket  @3
+    connect=ws2_32.connect          @4
+    getpeername=ws2_32.getpeername  @5
+    getsockname=ws2_32.getsockname  @6
