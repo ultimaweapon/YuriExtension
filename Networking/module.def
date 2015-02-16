@@ -5,3 +5,13 @@ EXPORTS
     connect=ws2_32.connect          @4
     getpeername=ws2_32.getpeername  @5
     getsockname=ws2_32.getsockname  @6
+    getsockopt=ipx_getsockopt       @7
+    htonl=ws2_32.htonl              @8
+    htons=ws2_32.htons              @9
+    inet_addr=ws2_32.inet_addr      @10
+    inet_ntoa=ws2_32.inet_ntoa      @11
+    ioctlsocket=ws2_32.ioctlsocket  @12
+    listen=ws2_32.listen            @13
+    ntohl=ws2_32.ntohl              @14
+    ntohs=ws2_32.ntohs              @15
+    recv=ws2_32.recv                @16

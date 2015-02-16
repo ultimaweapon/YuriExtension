@@ -27,3 +27,8 @@
 #include <windows.h>
 #include <winsock2.h>
 #include <wsipx.h>
+#include <wsnwlink.h>
+
+// C Header Files:
+
+#include <cstring>

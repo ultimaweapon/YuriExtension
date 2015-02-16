@@ -30,3 +30,31 @@ extern "C" int WSAAPI ipx_bind(SOCKET s, const sockaddr *name, int namelen)
         return ::bind(s, name, namelen);
     }
 }
+
+extern "C" int WSAAPI ipx_getsockopt(SOCKET s, int level, int optname, char *optval, int *optlen)
+{
+    if (level == NSPROTO_IPX) {
+        PIPX_ADDRESS_DATA ipxaddr;
+
+        switch (optname) {
+        case IPX_ADDRESS:
+            ipxaddr = reinterpret_cast<PIPX_ADDRESS_DATA>(optval);
+            ipxaddr->adapternum = 0;
+            ipxaddr->wan = FALSE;
+            ipxaddr->status = TRUE;
+            ipxaddr->maxpkt = 1470;
+            ipxaddr->linkspeed = 1000000;
+
+            std::memset(ipxaddr->netnum, 0, sizeof(ipxaddr->netnum));
+            std::memset(ipxaddr->nodenum, 0, sizeof(ipxaddr->nodenum));
+
+            return 0;
+        case IPX_MAX_ADAPTER_NUM:
+            reinterpret_cast<int *>(optval)[0] = 1;
+        default:
+            return 0;
+        }
+    } else {
+        return ::getsockopt(s, level, optname, optval, optlen);
+    }
+}
