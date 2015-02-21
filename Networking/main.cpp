@@ -16,6 +16,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 
+extern "C" int WSAAPI init(WORD wVersionRequested, LPWSADATA lpWSAData)
+{
+    auto res = WSAStartup(MAKEWORD(2, 2), lpWSAData);
+
+    if (!res) {
+        lpWSAData->wVersion = wVersionRequested;
+    }
+
+    return res;
+}
+
 extern "C" BOOL APIENTRY DllMain(HMODULE Module, DWORD CallReason, LPVOID Reserved)
 {
     UNREFERENCED_PARAMETER(Module);
