@@ -141,3 +141,12 @@ extern "C" int WSAAPI ipx_setsockopt(SOCKET s, int level, int optname,
         return setsockopt(s, level, optname, optval, optlen);
     }
 }
+
+extern "C" SOCKET WSAAPI ipx_socket(int af, int type, int protocol)
+{
+    if (af == AF_IPX && type == SOCK_DGRAM && protocol == NSPROTO_IPX) {
+        return WSASocketW(AF_INET, SOCK_DGRAM, IPPROTO_UDP, nullptr, 0, 0);
+    } else {
+        return WSASocketW(af, type, protocol, nullptr, 0, 0);
+    }
+}
