@@ -131,3 +131,13 @@ extern "C" int WSAAPI ipx_sendto(SOCKET s, const char *buf, int len, int flags,
         }
     }
 }
+
+extern "C" int WSAAPI ipx_setsockopt(SOCKET s, int level, int optname,
+    const char *optval, int optlen)
+{
+    if (level == NSPROTO_IPX) {
+        return 0;
+    } else {
+        return setsockopt(s, level, optname, optval, optlen);
+    }
+}

@@ -19,3 +19,5 @@ EXPORTS
     select=ws2_32.select            @18
     send=ws2_32.send                @19
     sendto=ipx_sendto               @20
+    setsockopt=ipx_setsockopt       @21
+    shutdown=ws2_32.shutdown        @22
