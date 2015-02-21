@@ -25,9 +25,9 @@ extern "C" int WSAAPI ipx_bind(SOCKET s, const sockaddr *name, int namelen)
         addr.sin_port = reinterpret_cast<const sockaddr_ipx *>(name)->sa_socket;
         addr.sin_addr.S_un.S_addr = INADDR_ANY;
 
-        return ::bind(s, reinterpret_cast<sockaddr *>(&addr), sizeof(addr));
+        return bind(s, reinterpret_cast<sockaddr *>(&addr), sizeof(addr));
     } else {
-        return ::bind(s, name, namelen);
+        return bind(s, name, namelen);
     }
 }
 
@@ -55,7 +55,7 @@ extern "C" int WSAAPI ipx_getsockopt(SOCKET s, int level, int optname, char *opt
             return 0;
         }
     } else {
-        return ::getsockopt(s, level, optname, optval, optlen);
+        return getsockopt(s, level, optname, optval, optlen);
     }
 }
 
