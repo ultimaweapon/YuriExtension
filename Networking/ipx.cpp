@@ -15,15 +15,17 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
+#include "netadapter.h"
 
 extern "C" int WSAAPI ipx_bind(SOCKET s, const sockaddr *name, int namelen)
 {
     if (name->sa_family == AF_IPX) {
+        auto ipxaddr = reinterpret_cast<const sockaddr_ipx *>(name);
         sockaddr_in addr = {0};
 
         addr.sin_family = AF_INET;
-        addr.sin_port = reinterpret_cast<const sockaddr_ipx *>(name)->sa_socket;
-        addr.sin_addr.S_un.S_addr = INADDR_ANY;
+        addr.sin_port = ipxaddr->sa_socket;
+        std::memcpy(&addr.sin_addr, ipxaddr->sa_nodenum, 4);
 
         return bind(s, reinterpret_cast<sockaddr *>(&addr), sizeof(addr));
     } else {
@@ -35,22 +37,46 @@ extern "C" int WSAAPI ipx_getsockopt(SOCKET s, int level, int optname, char *opt
 {
     if (level == NSPROTO_IPX) {
         PIPX_ADDRESS_DATA ipxaddr;
+        int i;
 
         switch (optname) {
         case IPX_ADDRESS:
             ipxaddr = reinterpret_cast<PIPX_ADDRESS_DATA>(optval);
-            ipxaddr->adapternum = 0;
-            ipxaddr->wan = FALSE;
-            ipxaddr->status = TRUE;
-            ipxaddr->maxpkt = 1470;
-            ipxaddr->linkspeed = 1000000;
 
-            std::memset(ipxaddr->netnum, 0, sizeof(ipxaddr->netnum));
-            std::memset(ipxaddr->nodenum, 0, sizeof(ipxaddr->nodenum));
+            // find requested address
+            i = 0;
+
+            for (const auto& net : netadapters) {
+                for (const auto& addr : net.addrs()) {
+                    if (i == ipxaddr->adapternum) {
+                        ipxaddr->wan = FALSE;
+                        ipxaddr->status = TRUE;
+                        ipxaddr->maxpkt = 1470;
+                        ipxaddr->linkspeed = 1000000;
+
+                        std::memset(ipxaddr->netnum, 0,
+                            sizeof(ipxaddr->netnum));
+                        std::memset(ipxaddr->nodenum, 0,
+                            sizeof(ipxaddr->nodenum));
+                        std::memcpy(ipxaddr->nodenum,
+                            &addr.address<sockaddr_in>()->sin_addr, 4);
+
+                        return 0;
+                    } else {
+                        i++;
+                    }
+                }
+            }
+
+            return SOCKET_ERROR;
+        case IPX_MAX_ADAPTER_NUM:
+            reinterpret_cast<int *>(optval)[0] = 0;
+
+            for (const auto& net : netadapters) {
+                reinterpret_cast<int *>(optval)[0] += net.addrs().size();
+            }
 
             return 0;
-        case IPX_MAX_ADAPTER_NUM:
-            reinterpret_cast<int *>(optval)[0] = 1;
         default:
             return 0;
         }

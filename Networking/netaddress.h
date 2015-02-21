@@ -16,29 +16,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-// Compilation Controlling Header Files:
+class netaddress final {
+public:
+    netaddress();
+    netaddress(const sockaddr *addr, std::size_t len);
+    netaddress(netaddress&& src);
 
-#include "targetver.h"
+    netaddress& operator=(netaddress&& src);
 
-// Windows Header Files:
+    void address(const sockaddr *addr, std::size_t len);
 
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
-#include <winsock2.h>
-#include <wsipx.h>
-#include <wsnwlink.h>
-
-#include <iphlpapi.h>
-
-// C++ Header Files:
-
-#include <vector>
-#include <utility>
-
-// C Header Files:
-
-#include <cinttypes>
-#include <cstddef>
-#include <cstring>
+    template<class T>
+    const T * address() const
+    {
+        return reinterpret_cast<const T *>(addr_.data());
+    }
+private:
+    std::vector<std::uint8_t> addr_;
+};

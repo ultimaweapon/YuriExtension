@@ -16,29 +16,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-// Compilation Controlling Header Files:
+#include "netaddress.h"
 
-#include "targetver.h"
+class netadapter final {
+public:
+    netadapter();
+    netadapter(netadapter&& src);
 
-// Windows Header Files:
+    netadapter& operator=(netadapter&& src);
 
-#define WIN32_LEAN_AND_MEAN
+    void add_addr(const netaddress& addr);
+    void add_addr(netaddress&& addr);
+    const std::vector<netaddress>& addrs() const { return addrs_; }
+private:
+    std::vector<netaddress> addrs_;
+};
 
-#include <windows.h>
-
-#include <winsock2.h>
-#include <wsipx.h>
-#include <wsnwlink.h>
-
-#include <iphlpapi.h>
-
-// C++ Header Files:
-
-#include <vector>
-#include <utility>
-
-// C Header Files:
-
-#include <cinttypes>
-#include <cstddef>
-#include <cstring>
+extern std::vector<netadapter> netadapters;

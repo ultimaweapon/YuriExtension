@@ -15,10 +15,45 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
+#include "netadapter.h"
 
 extern "C" int WSAAPI init(WORD wVersionRequested, LPWSADATA lpWSAData)
 {
-    auto res = WSAStartup(MAKEWORD(2, 2), lpWSAData);
+    std::uint8_t buffer[16384];
+    PIP_ADAPTER_ADDRESSES adapters;
+    ULONG bufsize;
+    int res;
+
+    // get network adaptors in the computer
+    adapters = reinterpret_cast<PIP_ADAPTER_ADDRESSES>(buffer);
+    bufsize = sizeof(buffer);
+
+    res = GetAdaptersAddresses(AF_INET, GAA_FLAG_INCLUDE_PREFIX |
+        GAA_FLAG_INCLUDE_GATEWAYS, nullptr, adapters, &bufsize);
+
+    switch (res) {
+    case NO_ERROR:
+        for (auto adapter = adapters; adapter; adapter = adapter->Next) {
+            netadapter net;
+
+            // get IPs of adaptor
+            for (auto addr = adapter->FirstUnicastAddress; addr;
+                addr = addr->Next) {
+                net.add_addr(netaddress(addr->Address.lpSockaddr,
+                    addr->Address.iSockaddrLength));
+            }
+
+            netadapters.push_back(std::move(net));
+        }
+        break;
+    case ERROR_NO_DATA:
+        break;
+    default:
+        return res;
+    }
+
+    // initialize winsock
+    res = WSAStartup(MAKEWORD(2, 2), lpWSAData);
 
     if (!res) {
         lpWSAData->wVersion = wVersionRequested;

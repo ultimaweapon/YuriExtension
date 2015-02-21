@@ -14,31 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
-#pragma once
+#include "stdafx.h"
+#include "netadapter.h"
 
-// Compilation Controlling Header Files:
+std::vector<netadapter> netadapters;
 
-#include "targetver.h"
+netadapter::netadapter()
+{
+}
 
-// Windows Header Files:
+netadapter::netadapter(netadapter&& src) : addrs_(std::move(src.addrs_))
+{
+}
 
-#define WIN32_LEAN_AND_MEAN
+netadapter& netadapter::operator=(netadapter&& src)
+{
+    addrs_ = std::move(src.addrs_);
 
-#include <windows.h>
+    return *this;
+}
 
-#include <winsock2.h>
-#include <wsipx.h>
-#include <wsnwlink.h>
+void netadapter::add_addr(const netaddress& addr)
+{
+    addrs_.push_back(addr);
+}
 
-#include <iphlpapi.h>
-
-// C++ Header Files:
-
-#include <vector>
-#include <utility>
-
-// C Header Files:
-
-#include <cinttypes>
-#include <cstddef>
-#include <cstring>
+void netadapter::add_addr(netaddress&& addr)
+{
+    addrs_.push_back(std::move(addr));
+}

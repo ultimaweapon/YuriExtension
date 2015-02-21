@@ -14,31 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
-#pragma once
+#include "stdafx.h"
+#include "netaddress.h"
 
-// Compilation Controlling Header Files:
+netaddress::netaddress()
+{
+}
 
-#include "targetver.h"
+netaddress::netaddress(const sockaddr *addr, std::size_t len)
+    : addr_(reinterpret_cast<const std::uint8_t *>(addr),
+    reinterpret_cast<const std::uint8_t *>(addr) + len)
+{
+}
 
-// Windows Header Files:
+netaddress::netaddress(netaddress&& src) : addr_(std::move(src.addr_))
+{
+}
 
-#define WIN32_LEAN_AND_MEAN
+netaddress& netaddress::operator=(netaddress&& src)
+{
+    addr_ = std::move(src.addr_);
 
-#include <windows.h>
+    return *this;
+}
 
-#include <winsock2.h>
-#include <wsipx.h>
-#include <wsnwlink.h>
-
-#include <iphlpapi.h>
-
-// C++ Header Files:
-
-#include <vector>
-#include <utility>
-
-// C Header Files:
-
-#include <cinttypes>
-#include <cstddef>
-#include <cstring>
+void netaddress::address(const sockaddr *addr, std::size_t len)
+{
+    auto data = reinterpret_cast<const std::uint8_t *>(addr);
+    addr_.assign(data, data + len);
+}
