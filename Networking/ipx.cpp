@@ -97,3 +97,37 @@ extern "C" int WSAAPI ipx_recvfrom(SOCKET s, char *buf, int len, int flags,
         }
     }
 }
+
+extern "C" int WSAAPI ipx_sendto(SOCKET s, const char *buf, int len, int flags,
+    const sockaddr *to, int tolen)
+{
+    WSABUF buffer = {0};
+    DWORD nsend;
+
+    buffer.buf = const_cast<CHAR *>(buf);
+    buffer.len = len;
+
+    if (to->sa_family == AF_IPX) {
+        auto ipxaddr = reinterpret_cast<const sockaddr_ipx *>(to);
+        sockaddr_in dest = {0};
+
+        dest.sin_family = AF_INET;
+        dest.sin_port = ipxaddr->sa_socket;
+        std::memcpy(&dest.sin_addr.S_un.S_addr, &ipxaddr->sa_nodenum, 4);
+
+        if (WSASendTo(s, &buffer, 1, &nsend, flags,
+            reinterpret_cast<sockaddr *>(&dest), sizeof(dest), nullptr,
+            nullptr)) {
+            return SOCKET_ERROR;
+        } else {
+            return nsend;
+        }
+    } else {
+        if (WSASendTo(s, &buffer, 1, &nsend, flags, to, tolen, nullptr,
+            nullptr)) {
+            return SOCKET_ERROR;
+        } else {
+            return nsend;
+        }
+    }
+}

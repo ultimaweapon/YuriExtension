@@ -18,3 +18,4 @@ EXPORTS
     recvfrom=ipx_recvfrom           @17
     select=ws2_32.select            @18
     send=ws2_32.send                @19
+    sendto=ipx_sendto               @20
