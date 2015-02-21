@@ -58,3 +58,42 @@ extern "C" int WSAAPI ipx_getsockopt(SOCKET s, int level, int optname, char *opt
         return ::getsockopt(s, level, optname, optval, optlen);
     }
 }
+
+extern "C" int WSAAPI ipx_recvfrom(SOCKET s, char *buf, int len, int flags,
+    sockaddr *from, int *fromlen)
+{
+    WSABUF buffer = {0};
+    DWORD nrecv = 0;
+
+    buffer.buf = buf;
+    buffer.len = len;
+
+    if (*fromlen == sizeof(sockaddr_ipx)) {
+        auto ipxaddr = reinterpret_cast<sockaddr_ipx *>(from);
+        sockaddr_in raddr;
+        int raddr_len = sizeof(raddr);
+
+        if (WSARecvFrom(s, &buffer, 1, &nrecv,
+            reinterpret_cast<LPDWORD>(&flags),
+            reinterpret_cast<sockaddr *>(&raddr), &raddr_len, nullptr,
+            nullptr)) {
+            nrecv = (DWORD)-1;
+        }
+
+        ipxaddr->sa_family = AF_IPX;
+        std::memset(ipxaddr->sa_netnum, 0, sizeof(ipxaddr->sa_netnum));
+        std::memset(ipxaddr->sa_nodenum, 0, sizeof(ipxaddr->sa_nodenum));
+        std::memcpy(ipxaddr->sa_nodenum, &raddr.sin_addr.S_un.S_addr, 4);
+        ipxaddr->sa_socket = raddr.sin_port;
+
+        return nrecv;
+    } else {
+        if (WSARecvFrom(s, &buffer, 1, &nrecv,
+            reinterpret_cast<LPDWORD>(&flags), from, fromlen, nullptr,
+            nullptr)) {
+            return -1;
+        } else {
+            return nrecv;
+        }
+    }
+}
