@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Networking", "Networking\Ne
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Configurations", "Configurations\Configurations.vcxproj", "{4D15BC02-22F8-4456-B31F-084500575D5C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BroadcastRelay", "BroadcastRelay\BroadcastRelay.vcxproj", "{B132BD40-5A72-4A4E-B017-0B1B442EFC9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{4D15BC02-22F8-4456-B31F-084500575D5C}.Debug|Win32.Build.0 = Debug|Win32
 		{4D15BC02-22F8-4456-B31F-084500575D5C}.Release|Win32.ActiveCfg = Release|Win32
 		{4D15BC02-22F8-4456-B31F-084500575D5C}.Release|Win32.Build.0 = Release|Win32
+		{B132BD40-5A72-4A4E-B017-0B1B442EFC9B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B132BD40-5A72-4A4E-B017-0B1B442EFC9B}.Debug|Win32.Build.0 = Debug|Win32
+		{B132BD40-5A72-4A4E-B017-0B1B442EFC9B}.Release|Win32.ActiveCfg = Release|Win32
+		{B132BD40-5A72-4A4E-B017-0B1B442EFC9B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
