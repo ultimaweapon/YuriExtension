@@ -1,0 +1,26 @@
+import "unknwn.idl";
+
+[
+    local,
+    object,
+    uuid("515ED1C2-F7D0-443E-B170-9802FCD43364")
+]
+interface IConfigurations : IUnknown
+{
+}
+
+[
+    uuid("5AB2DCD2-4D71-4D7C-A510-A833B1292A9A")
+]
+library YuriExtensionConfigurations
+{
+    interface IConfigurations;
+
+    [
+        uuid("46247F7C-1B42-4D39-81CC-11641480A735")
+    ]
+    coclass Configurations
+    {
+        interface IConfigurations;
+    }
+}

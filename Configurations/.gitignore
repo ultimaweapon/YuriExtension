@@ -1,2 +1,6 @@
 /Configurations.vcxproj.user
+/configurations_h.h
+/configurations_i.c
+/configurations_p.c
+/dlldata.c
 /obj/
