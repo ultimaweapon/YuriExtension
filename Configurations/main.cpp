@@ -16,6 +16,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 
+extern "C" HRESULT __stdcall DllCanUnloadNow()
+{
+    return S_OK;
+}
+
+extern "C" HRESULT __stdcall DllGetClassObject(REFCLSID rclsid, REFIID riid,
+    LPVOID *ppv)
+{
+    return CLASS_E_CLASSNOTAVAILABLE;
+}
+
+extern "C" HRESULT __stdcall DllRegisterServer()
+{
+    return SELFREG_E_CLASS;
+}
+
+extern "C" HRESULT __stdcall DllUnregisterServer()
+{
+    return S_OK;
+}
+
 extern "C" BOOL APIENTRY DllMain(HMODULE Module, DWORD CallReason, LPVOID Reserved)
 {
     UNREFERENCED_PARAMETER(Module);
