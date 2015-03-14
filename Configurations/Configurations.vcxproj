@@ -87,12 +87,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Configurations.h" />
+    <ClInclude Include="ConfigurationsValue.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="TargetVer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Configurations.cpp" />
+    <ClCompile Include="ConfigurationsValue.cpp" />
     <ClCompile Include="Main.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
