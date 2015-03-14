@@ -15,33 +15,44 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
+#include "Configurations_h.h"
+#include "Configurations_i.c"
+
+BEGIN_OBJECT_MAP(g_lpClasses)
+END_OBJECT_MAP()
 
 extern "C" HRESULT __stdcall DllCanUnloadNow()
 {
-    return S_OK;
+    return _Module.DllCanUnloadNow();
 }
 
-extern "C" HRESULT __stdcall DllGetClassObject(REFCLSID rclsid, REFIID riid,
-    LPVOID *ppv)
+extern "C" HRESULT __stdcall DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID *ppv)
 {
-    return CLASS_E_CLASSNOTAVAILABLE;
+    return _Module.DllGetClassObject(rclsid, riid, ppv);
 }
 
 extern "C" HRESULT __stdcall DllRegisterServer()
 {
-    return SELFREG_E_CLASS;
+    return _Module.DllRegisterServer();
 }
 
 extern "C" HRESULT __stdcall DllUnregisterServer()
 {
-    return S_OK;
+    return _Module.DllUnregisterServer();
 }
 
-extern "C" BOOL APIENTRY DllMain(HMODULE Module, DWORD CallReason, LPVOID Reserved)
+extern "C" BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwCallReason, LPVOID /* lpReserved */)
 {
-    UNREFERENCED_PARAMETER(Module);
-    UNREFERENCED_PARAMETER(CallReason);
-    UNREFERENCED_PARAMETER(Reserved);
+    switch (dwCallReason)
+    {
+    case DLL_PROCESS_ATTACH:
+        if (FAILED(_Module.Init(g_lpClasses, hModule, &LIBID_YuriExtensionConfigurations)))
+            return FALSE; // Always E_OUTOFMEMORY.
+        break;
+    case DLL_PROCESS_DETACH:
+        _Module.Term();
+        break;
+    }
 
     return TRUE;
 }

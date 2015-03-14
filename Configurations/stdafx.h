@@ -27,3 +27,19 @@
 #include <windows.h>
 
 #include <olectl.h>
+
+// ATL & WTL Header Files:
+
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
+#define _ATL_FREE_THREADED
+#define _WTL_NO_CSTRING
+#define _WTL_NO_WTYPES
+
+#include <atlbase.h>
+#include <atlstr.h>
+#include <atltypes.h>
+#include <atlapp.h>
+
+extern CServerAppModule _Module;
+
+#include <atlmisc.h>
