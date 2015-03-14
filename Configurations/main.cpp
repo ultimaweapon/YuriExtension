@@ -15,10 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
+#include "Configurations.h"
 #include "Configurations_h.h"
 #include "Configurations_i.c"
 
 BEGIN_OBJECT_MAP(g_lpClasses)
+    OBJECT_ENTRY(__uuidof(Configurations), Configurations)
 END_OBJECT_MAP()
 
 extern "C" HRESULT __stdcall DllCanUnloadNow()
