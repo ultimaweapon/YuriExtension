@@ -33,4 +33,6 @@ public: // ATL & WTL Properties
     BEGIN_COM_MAP(Configurations)
         COM_INTERFACE_ENTRY(IConfigurations)
     END_COM_MAP()
+public: // IConfigurations Interface
+    virtual HRESULT STDMETHODCALLTYPE LoadFromFile(BSTR name);
 };

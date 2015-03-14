@@ -7,6 +7,7 @@ import "unknwn.idl";
 ]
 interface IConfigurations : IUnknown
 {
+    HRESULT LoadFromFile([in] BSTR name);
 }
 
 [

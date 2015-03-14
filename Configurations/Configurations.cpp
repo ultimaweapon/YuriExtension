@@ -20,3 +20,57 @@
 Configurations::Configurations()
 {
 }
+
+HRESULT Configurations::LoadFromFile(BSTR name)
+{
+    HRESULT hr;
+
+    // Validate Parameters
+    if (!name)
+        return E_POINTER;
+
+    // Initialize XML Reader
+    CComPtr<IStream> pFile;
+    if (FAILED(hr = SHCreateStreamOnFileEx(name, STGM_READ | STGM_SHARE_DENY_WRITE, FILE_ATTRIBUTE_NORMAL, FALSE, NULL, &pFile)))
+        return hr;
+
+    CComPtr<IXmlReader> pReader;
+    if (FAILED(hr = CreateXmlReader(__uuidof(IXmlReader), (void **)&pReader, NULL)))
+        return hr;
+
+    if (FAILED(hr = pReader->SetInput(pFile)))
+        return hr;
+
+    // Parse XML
+    while (!pReader->IsEOF())
+    {
+        // Read next element
+        XmlNodeType nodeType;
+
+        while (FAILED(hr = pReader->Read(&nodeType)))
+        {
+            if (hr != E_PENDING)
+                return hr;
+        }
+
+        if (hr != S_OK)
+            break;
+
+        // Process current element
+        switch (nodeType)
+        {
+        case XmlNodeType_Element:
+            break;
+        case XmlNodeType_Attribute:
+            break;
+        case XmlNodeType_Text:
+            break;
+        case XmlNodeType_CDATA:
+            break;
+        case XmlNodeType_EndElement:
+            break;
+        }
+    }
+
+    return S_OK;
+}

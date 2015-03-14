@@ -27,6 +27,7 @@
 #include <windows.h>
 
 #include <olectl.h>
+#include <xmllite.h>
 
 // ATL & WTL Header Files:
 
