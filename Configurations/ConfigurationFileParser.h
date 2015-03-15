@@ -14,34 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
-#include "stdafx.h"
-#include "Configurations.h"
-#include "ConfigurationFileParser.h"
+#pragma once
 
-Configurations::Configurations()
+#include "ConfigurationsValue.h"
+
+class CConfigurationFileParser
 {
-}
-
-HRESULT Configurations::LoadFromFile(BSTR name)
-{
-    HRESULT hr;
-
-    // Validate Parameters
-    if (!name)
-        return E_POINTER;
-
-    // Parse
-    try
-    {
-        CConfigurationFileParser parser(name);
-
-        if (FAILED(hr = parser.Parse()))
-            return hr;
-    }
-    catch (CAtlException& e)
-    {
-        return e;
-    }
-
-    return S_OK;
-}
+public:
+    CConfigurationFileParser(LPCWSTR lpszFile);
+public:
+    const CConfigurationsValue& GetConfigurations() const;
+    HRESULT Parse();
+private:
+    HRESULT OnCharacterData(IXmlReader *pReader);
+    HRESULT OnEndElement(IXmlReader *pReader);
+    HRESULT OnStartElement(IXmlReader *pReader);
+    HRESULT OnText(IXmlReader *pReader);
+private:
+    CConfigurationsValue m_conf;
+    CString m_strFile;
+    XmlNodeType m_currentNodeType;
+    CAtlArray<CString> m_nodePath;
+};

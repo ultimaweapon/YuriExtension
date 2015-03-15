@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ConfigurationFileParser.h" />
     <ClInclude Include="Configurations.h" />
     <ClInclude Include="ConfigurationsValue.h" />
     <ClInclude Include="Resources.h" />
@@ -93,6 +94,7 @@
     <ClInclude Include="TargetVer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConfigurationFileParser.cpp" />
     <ClCompile Include="Configurations.cpp" />
     <ClCompile Include="ConfigurationsValue.cpp" />
     <ClCompile Include="Main.cpp">

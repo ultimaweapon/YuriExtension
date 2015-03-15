@@ -39,6 +39,7 @@
 #include <atlbase.h>
 #include <atlstr.h>
 #include <atltypes.h>
+#include <atlcoll.h>
 #include <atlapp.h>
 
 extern CServerAppModule _Module;
