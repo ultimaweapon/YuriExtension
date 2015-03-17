@@ -37,6 +37,8 @@ HRESULT Configurations::LoadFromFile(BSTR name)
 
         if (FAILED(hr = parser.Parse()))
             return hr;
+
+        m_conf = parser.GetConfigurations();
     }
     catch (CAtlException& e)
     {

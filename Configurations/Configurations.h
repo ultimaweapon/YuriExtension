@@ -16,6 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include "ConfigurationsValue.h"
 #include "Resources.h"
 #include "Configurations_h.h"
 
@@ -35,4 +36,6 @@ public: // ATL & WTL Properties
     END_COM_MAP()
 public: // IConfigurations Interface
     virtual HRESULT STDMETHODCALLTYPE LoadFromFile(BSTR name);
+private: // Properties
+    CConfigurationsValue m_conf;
 };
