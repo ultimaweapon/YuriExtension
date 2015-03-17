@@ -65,6 +65,9 @@
       <ModuleDefinitionFile>Module.def</ModuleDefinitionFile>
       <AdditionalDependencies>xmllite.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Midl>
+      <TypeLibraryName>$(ProjectName).tlb</TypeLibraryName>
+    </Midl>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -84,6 +87,9 @@
       <ModuleDefinitionFile>Module.def</ModuleDefinitionFile>
       <AdditionalDependencies>xmllite.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Midl>
+      <TypeLibraryName>$(ProjectName).tlb</TypeLibraryName>
+    </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ConfigurationFileParser.h" />
