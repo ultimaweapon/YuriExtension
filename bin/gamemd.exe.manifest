@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+  <assemblyIdentity type="win32" name="Westwood.YuriRevenge" version="1.0.1.1"/>
+  <description>Main executable for Yuri's Revenge</description>
+  <dependency>
+    <dependentAssembly>
+      <assemblyIdentity type="win32" name="YuriExtension.Configurations" version="1.0.50.0"/>
+    </dependentAssembly>
+  </dependency>
+</assembly>
