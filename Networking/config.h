@@ -16,36 +16,4 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-// Compilation Controlling Header Files:
-
-#include "targetver.h"
-
-// Windows Header Files:
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
-#include <winsock2.h>
-#include <wsipx.h>
-#include <wsnwlink.h>
-
-#include <iphlpapi.h>
-
-// C++ Header Files:
-
-#include <vector>
-#include <utility>
-
-// C Header Files:
-
-#include <cinttypes>
-#include <cstddef>
-#include <cstring>
-
-// COM Classes:
-
-#import <YuriExtension.Configurations.dll> no_namespace exclude( \
-    "IUnknown", \
-    "GUID"      \
-)
+extern IConfigurationsPtr config;

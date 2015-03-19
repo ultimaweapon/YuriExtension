@@ -16,6 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "netadapter.h"
+#include "config.h"
 
 extern "C" int WSAAPI init(WORD wVersionRequested, LPWSADATA lpWSAData)
 {
@@ -23,6 +24,14 @@ extern "C" int WSAAPI init(WORD wVersionRequested, LPWSADATA lpWSAData)
     PIP_ADAPTER_ADDRESSES adapters;
     ULONG bufsize;
     int res;
+    HRESULT hr;
+
+    // load configurations
+    hr = config.CreateInstance(__uuidof(Configurations));
+
+    if (FAILED(hr)) {
+        return WSASYSNOTREADY;
+    }
 
     // get network adaptors in the computer
     adapters = reinterpret_cast<PIP_ADAPTER_ADDRESSES>(buffer);

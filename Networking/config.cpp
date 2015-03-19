@@ -14,38 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
-#pragma once
+#include "stdafx.h"
+#include "config.h"
 
-// Compilation Controlling Header Files:
-
-#include "targetver.h"
-
-// Windows Header Files:
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
-#include <winsock2.h>
-#include <wsipx.h>
-#include <wsnwlink.h>
-
-#include <iphlpapi.h>
-
-// C++ Header Files:
-
-#include <vector>
-#include <utility>
-
-// C Header Files:
-
-#include <cinttypes>
-#include <cstddef>
-#include <cstring>
-
-// COM Classes:
-
-#import <YuriExtension.Configurations.dll> no_namespace exclude( \
-    "IUnknown", \
-    "GUID"      \
-)
+IConfigurationsPtr config;
