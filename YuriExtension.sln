@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BroadcastRelay", "Broadcast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebugConsole", "DebugConsole\DebugConsole.csproj", "{BE66BD3B-DCF5-4724-BF20-9A91CFCA466A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YuriExtension", "YuriExtension\YuriExtension.vcxproj", "{BA8D3756-9B6D-436F-AE3F-2BAC194F0422}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -33,6 +35,10 @@ Global
 		{BE66BD3B-DCF5-4724-BF20-9A91CFCA466A}.Debug|Win32.Build.0 = Debug|x86
 		{BE66BD3B-DCF5-4724-BF20-9A91CFCA466A}.Release|Win32.ActiveCfg = Release|x86
 		{BE66BD3B-DCF5-4724-BF20-9A91CFCA466A}.Release|Win32.Build.0 = Release|x86
+		{BA8D3756-9B6D-436F-AE3F-2BAC194F0422}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BA8D3756-9B6D-436F-AE3F-2BAC194F0422}.Debug|Win32.Build.0 = Debug|Win32
+		{BA8D3756-9B6D-436F-AE3F-2BAC194F0422}.Release|Win32.ActiveCfg = Release|Win32
+		{BA8D3756-9B6D-436F-AE3F-2BAC194F0422}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
