@@ -16,16 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-// Compilation Controlling Header Files:
-
-#include "targetver.h"
-
-// Windows Header Files:
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
-// C++ Header Files:
-
-#include <exception>
+#import <YuriExtension.Configurations.dll> no_namespace exclude( \
+    "IUnknown", \
+    "GUID"      \
+)

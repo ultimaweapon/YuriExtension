@@ -14,18 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
-#pragma once
+#include "stdafx.h"
+#include "config.h"
 
-// Compilation Controlling Header Files:
+static IConfigurationsPtr config;
 
-#include "targetver.h"
+void init_config()
+{
+    HRESULT hr;
 
-// Windows Header Files:
+    hr = config.CreateInstance(__uuidof(Configurations));
 
-#define WIN32_LEAN_AND_MEAN
+    if (FAILED(hr)) {
+        throw std::exception("Failed to create storage for configurations");
+    }
+}
 
-#include <windows.h>
-
-// C++ Header Files:
-
-#include <exception>
+void term_config()
+{
+    config.Release();
+}

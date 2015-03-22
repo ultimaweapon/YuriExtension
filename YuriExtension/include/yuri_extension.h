@@ -16,16 +16,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-// Compilation Controlling Header Files:
+#include "yuri_extension/api.h"
 
-#include "targetver.h"
-
-// Windows Header Files:
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
-// C++ Header Files:
-
-#include <exception>
+namespace yuriext {
+    yuriext_api void init();
+    yuriext_api void term();
+} // namespace yuriext

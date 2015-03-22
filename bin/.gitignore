@@ -8,7 +8,9 @@
 /YuriExtension.Configurations.lib
 /YuriExtension.Configurations.pdb
 /YuriExtension.dll
+/YuriExtension.exp
 /YuriExtension.ilk
+/YuriExtension.lib
 /YuriExtension.pdb
 /wsock32.dll
 /wsock32.exp
