@@ -36,6 +36,7 @@
 
 #include <vector>
 #include <utility>
+#include <exception>
 
 // C Header Files:
 

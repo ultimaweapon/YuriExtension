@@ -18,6 +18,8 @@
 #include "netadapter.h"
 #include "config.h"
 
+#include <yuri_extension.h>
+
 extern "C" int WSAAPI init(WORD wVersionRequested, LPWSADATA lpWSAData)
 {
     std::uint8_t buffer[16384];
@@ -26,10 +28,18 @@ extern "C" int WSAAPI init(WORD wVersionRequested, LPWSADATA lpWSAData)
     int res;
     HRESULT hr;
 
+    // core initialization
+    try {
+        yuriext::init();
+    } catch (std::exception&) {
+        return WSASYSNOTREADY;
+    }
+
     // load configurations
     hr = config.CreateInstance(__uuidof(Configurations));
 
     if (FAILED(hr)) {
+        yuriext::term();
         return WSASYSNOTREADY;
     }
 
@@ -58,6 +68,8 @@ extern "C" int WSAAPI init(WORD wVersionRequested, LPWSADATA lpWSAData)
     case ERROR_NO_DATA:
         break;
     default:
+        config.Release();
+        yuriext::term();
         return res;
     }
 
@@ -66,6 +78,10 @@ extern "C" int WSAAPI init(WORD wVersionRequested, LPWSADATA lpWSAData)
 
     if (!res) {
         lpWSAData->wVersion = wVersionRequested;
+    } else {
+        netadapters.clear();
+        config.Release();
+        yuriext::term();
     }
 
     return res;
