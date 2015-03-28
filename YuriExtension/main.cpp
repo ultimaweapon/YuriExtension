@@ -22,16 +22,32 @@
 static unsigned int initcnt;
 static CRITICAL_SECTION initlock;
 static std::exception_ptr initerr;
+static volatile bool activated;
 
-static void init()
+static bool init()
 {
+    // check to see if we should activate
+    DWORD nbuf = MAX_PATH / 2;
+    std::unique_ptr<wchar_t[]> gamemod;
+    const wchar_t *exe;
+
+    do {
+        gamemod = std::make_unique<wchar_t[]>(nbuf *= 2);
+    } while (GetModuleFileNameW(NULL, gamemod.get(), nbuf) == nbuf);
+
+    exe = PathFindFileNameW(gamemod.get());
+
+    if (_wcsicmp(exe, L"gamemd.exe")) {
+        return false;
+    }
+
     // check initialization flag
     if (initerr) {
         std::rethrow_exception(initerr);
     }
 
     if (initcnt++) {
-        return;
+        return true;
     }
 
     try {
@@ -41,6 +57,8 @@ static void init()
         initcnt--;
         throw;
     }
+
+    return activated = true;
 }
 
 static void term()
@@ -50,18 +68,25 @@ static void term()
         return;
     }
 
+    activated = false;
+
     term_config();
 }
 
-void yuriext::init()
+bool yuriext::init()
 {
     EnterCriticalSection(&initlock);
 
     __try {
-        ::init();
+        return ::init();
     } __finally {
         LeaveCriticalSection(&initlock);
     }
+}
+
+bool yuriext::is_activated()
+{
+    return activated;
 }
 
 void yuriext::term()

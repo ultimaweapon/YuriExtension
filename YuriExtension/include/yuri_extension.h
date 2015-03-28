@@ -19,6 +19,7 @@
 #include "yuri_extension/api.h"
 
 namespace yuriext {
-    yuriext_api void init();
+    yuriext_api bool init();
     yuriext_api void term();
+    yuriext_api bool is_activated();
 } // namespace yuriext

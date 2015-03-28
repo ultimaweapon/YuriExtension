@@ -26,6 +26,13 @@
 
 #include <windows.h>
 
+#include <shlwapi.h>
+
 // C++ Header Files:
 
+#include <memory>
 #include <exception>
+
+// C Header Files:
+
+#include <cstring>
