@@ -17,9 +17,11 @@
 #include "stdafx.h"
 #include "netadapter.h"
 
+#include <yuri_extension.h>
+
 extern "C" int WSAAPI ipx_bind(SOCKET s, const sockaddr *name, int namelen)
 {
-    if (name->sa_family == AF_IPX) {
+    if (yuriext::is_activated() && name->sa_family == AF_IPX) {
         auto ipxaddr = reinterpret_cast<const sockaddr_ipx *>(name);
         sockaddr_in addr = {0};
 
@@ -35,7 +37,7 @@ extern "C" int WSAAPI ipx_bind(SOCKET s, const sockaddr *name, int namelen)
 
 extern "C" int WSAAPI ipx_getsockopt(SOCKET s, int level, int optname, char *optval, int *optlen)
 {
-    if (level == NSPROTO_IPX) {
+    if (yuriext::is_activated() && level == NSPROTO_IPX) {
         PIPX_ADDRESS_DATA ipxaddr;
         int i;
 
@@ -94,7 +96,7 @@ extern "C" int WSAAPI ipx_recvfrom(SOCKET s, char *buf, int len, int flags,
     buffer.buf = buf;
     buffer.len = len;
 
-    if (*fromlen == sizeof(sockaddr_ipx)) {
+    if (yuriext::is_activated() && *fromlen == sizeof(sockaddr_ipx)) {
         auto ipxaddr = reinterpret_cast<sockaddr_ipx *>(from);
         sockaddr_in raddr;
         int raddr_len = sizeof(raddr);
@@ -133,7 +135,7 @@ extern "C" int WSAAPI ipx_sendto(SOCKET s, const char *buf, int len, int flags,
     buffer.buf = const_cast<CHAR *>(buf);
     buffer.len = len;
 
-    if (to->sa_family == AF_IPX) {
+    if (yuriext::is_activated() && to->sa_family == AF_IPX) {
         auto ipxaddr = reinterpret_cast<const sockaddr_ipx *>(to);
         sockaddr_in dest = {0};
 
@@ -161,7 +163,7 @@ extern "C" int WSAAPI ipx_sendto(SOCKET s, const char *buf, int len, int flags,
 extern "C" int WSAAPI ipx_setsockopt(SOCKET s, int level, int optname,
     const char *optval, int optlen)
 {
-    if (level == NSPROTO_IPX) {
+    if (yuriext::is_activated() && level == NSPROTO_IPX) {
         return 0;
     } else {
         return setsockopt(s, level, optname, optval, optlen);
@@ -170,7 +172,8 @@ extern "C" int WSAAPI ipx_setsockopt(SOCKET s, int level, int optname,
 
 extern "C" SOCKET WSAAPI ipx_socket(int af, int type, int protocol)
 {
-    if (af == AF_IPX && type == SOCK_DGRAM && protocol == NSPROTO_IPX) {
+    if (yuriext::is_activated() && af == AF_IPX && type == SOCK_DGRAM &&
+        protocol == NSPROTO_IPX) {
         return WSASocketW(AF_INET, SOCK_DGRAM, IPPROTO_UDP, nullptr, 0, 0);
     } else {
         return WSASocketW(af, type, protocol, nullptr, 0, 0);

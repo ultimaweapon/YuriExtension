@@ -30,7 +30,9 @@ extern "C" int WSAAPI init(WORD wVersionRequested, LPWSADATA lpWSAData)
 
     // core initialization
     try {
-        yuriext::init();
+        if (!yuriext::init()) {
+            return WSAStartup(wVersionRequested, lpWSAData);
+        }
     } catch (std::exception&) {
         return WSASYSNOTREADY;
     }
