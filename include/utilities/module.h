@@ -16,17 +16,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-// Compilation Controlling Header Files:
-
-#include "targetver.h"
-
-// Windows Header Files:
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
-// C++ Header Files:
+#include "api.h"
 
 #include <string>
-#include <memory>
+
+namespace util {
+    utilapi std::wstring get_module_filename(HMODULE mod);
+} // namespace util

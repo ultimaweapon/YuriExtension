@@ -16,17 +16,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-// Compilation Controlling Header Files:
-
-#include "targetver.h"
-
-// Windows Header Files:
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
-// C++ Header Files:
-
-#include <string>
-#include <memory>
+#ifdef YURIEXT_NATIVEUTIL
+#define utilapi __declspec(dllexport)
+#else
+#define utilapi __declspec(dllimport)
+#endif

@@ -14,19 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
-#pragma once
+#include "stdafx.h"
 
-// Compilation Controlling Header Files:
+#include <utilities/module.h>
 
-#include "targetver.h"
+std::wstring util::get_module_filename(HMODULE mod)
+{
+    DWORD nbuf = MAX_PATH / 2;
+    std::unique_ptr<wchar_t[]> fname;
 
-// Windows Header Files:
+    do {
+        fname = std::make_unique<wchar_t[]>(nbuf *= 2);
+    } while (GetModuleFileNameW(mod, fname.get(), nbuf) == nbuf);
 
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
-// C++ Header Files:
-
-#include <string>
-#include <memory>
+    return fname.get();
+}
