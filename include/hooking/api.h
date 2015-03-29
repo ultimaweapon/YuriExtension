@@ -16,22 +16,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-// Compilation Controlling Header Files:
-
-#include "targetver.h"
-
-// Windows Header Files:
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
-// C++ Header Files:
-
-#include <system_error>
-#include <stdexcept>
-
-// C Header Files:
-
-#include <cstring>
-#include <cinttypes>
+#ifdef HOOKING_LIBRARY
+#define hooking_api __declspec(dllexport)
+#else
+#define hooking_api __declspec(dllimport)
+#endif

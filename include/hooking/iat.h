@@ -16,22 +16,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-// Compilation Controlling Header Files:
+#include "api.h"
+#include "types.h"
 
-#include "targetver.h"
-
-// Windows Header Files:
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
-// C++ Header Files:
-
-#include <system_error>
-#include <stdexcept>
-
-// C Header Files:
-
-#include <cstring>
-#include <cinttypes>
+namespace hooking {
+    hooking_api function_ptr hook_iat(const void *target_module,
+        const char *target_import, const char *target_func, function_ptr hook);
+} // namespace hooking
