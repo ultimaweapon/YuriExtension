@@ -109,6 +109,16 @@
   <ItemGroup>
     <ResourceCompile Include="resources.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Configurations\Configurations.vcxproj">
+      <Project>{4d15bc02-22f8-4456-b31f-084500575d5c}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
