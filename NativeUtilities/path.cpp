@@ -14,20 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
-#pragma once
+#include "stdafx.h"
 
-// Compilation Controlling Header Files:
+#include <utilities/path.h>
 
-#include "targetver.h"
+std::wstring util::path_filename(const std::wstring& p)
+{
+    // check length
+    auto len = p.length();
 
-// Windows Header Files:
+    if (len == 0) {
+        throw std::invalid_argument("Invalid path name");
+    }
 
-#define WIN32_LEAN_AND_MEAN
+    // check format
+    auto ch = p[len - 1];
 
-#include <windows.h>
+    if (ch == L'\\' || ch == L'/') {
+        throw std::invalid_argument("No file's name in the path");
+    }
 
-// C++ Header Files:
+    auto idx = p.find_last_of(L"\\/");
 
-#include <stdexcept>
-#include <string>
-#include <memory>
+    if (idx == p.npos) {
+        return p;
+    }
+
+    return p.substr(idx + 1);
+}
