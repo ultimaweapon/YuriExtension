@@ -1,11 +1,11 @@
 EXPORTS
     accept=ws2_32.accept                                            @1
-    bind=ipx_bind                                                   @2
+    bind=ws2_32.bind                                                @2
     closesocket=ws2_32.closesocket                                  @3
     connect=ws2_32.connect                                          @4
     getpeername=ws2_32.getpeername                                  @5
     getsockname=ws2_32.getsockname                                  @6
-    getsockopt=ipx_getsockopt                                       @7
+    getsockopt=ws2_32.getsockopt                                    @7
     htonl=ws2_32.htonl                                              @8
     htons=ws2_32.htons                                              @9
     inet_addr=ws2_32.inet_addr                                      @10
@@ -15,13 +15,13 @@ EXPORTS
     ntohl=ws2_32.ntohl                                              @14
     ntohs=ws2_32.ntohs                                              @15
     recv=ws2_32.recv                                                @16
-    recvfrom=ipx_recvfrom                                           @17
+    recvfrom=ws2_32.recvfrom                                        @17
     select=ws2_32.select                                            @18
     send=ws2_32.send                                                @19
-    sendto=ipx_sendto                                               @20
-    setsockopt=ipx_setsockopt                                       @21
+    sendto=ws2_32.sendto                                            @20
+    setsockopt=ws2_32.setsockopt                                    @21
     shutdown=ws2_32.shutdown                                        @22
-    socket=ipx_socket                                               @23
+    socket=ws2_32.socket                                            @23
     MigrateWinsockConfiguration=mswsock.MigrateWinsockConfiguration @24
     gethostbyaddr=ws2_32.gethostbyaddr                              @51
     gethostbyname=ws2_32.gethostbyname                              @52
@@ -44,7 +44,7 @@ EXPORTS
     WSASetLastError=ws2_32.WSASetLastError                          @112
     WSACancelBlockingCall=ws2_32.WSACancelBlockingCall              @113
     WSAIsBlocking=ws2_32.WSAIsBlocking                              @114
-    WSAStartup=init                                                 @115
+    WSAStartup=ws2_32.WSAStartup                                    @115
     WSACleanup=ws2_32.WSACleanup                                    @116
     __WSAFDIsSet=ws2_32.__WSAFDIsSet                                @151
     WEP=ws2_32.WEP                                                  @500

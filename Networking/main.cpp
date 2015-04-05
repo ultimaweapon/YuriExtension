@@ -15,10 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
+#include "ipx.h"
 #include "netadapter.h"
 #include "config.h"
 
 #include <yuri_extension.h>
+
+#include <hooking/iat.h>
+
+#include <utilities/module.h>
+#include <utilities/path.h>
 
 extern "C" int WSAAPI init(WORD wVersionRequested, LPWSADATA lpWSAData)
 {
@@ -89,11 +95,81 @@ extern "C" int WSAAPI init(WORD wVersionRequested, LPWSADATA lpWSAData)
     return res;
 }
 
+static bool hook_wsock32(HMODULE target_module)
+{
+    // bind
+    if (!hooking::hook_iat(target_module, "wsock32.dll",
+        reinterpret_cast<const char *>(2),
+        reinterpret_cast<hooking::function_ptr>(ipx_bind))) {
+        return false;
+    }
+
+    // getsockopt
+    if (!hooking::hook_iat(target_module, "wsock32.dll",
+        reinterpret_cast<const char *>(7),
+        reinterpret_cast<hooking::function_ptr>(ipx_getsockopt))) {
+        return false;
+    }
+
+    // recvfrom
+    if (!hooking::hook_iat(target_module, "wsock32.dll",
+        reinterpret_cast<const char *>(17),
+        reinterpret_cast<hooking::function_ptr>(ipx_recvfrom))) {
+        return false;
+    }
+
+    // sendto
+    if (!hooking::hook_iat(target_module, "wsock32.dll",
+        reinterpret_cast<const char *>(20),
+        reinterpret_cast<hooking::function_ptr>(ipx_sendto))) {
+        return false;
+    }
+
+    // setsockopt
+    if (!hooking::hook_iat(target_module, "wsock32.dll",
+        reinterpret_cast<const char *>(21),
+        reinterpret_cast<hooking::function_ptr>(ipx_setsockopt))) {
+        return false;
+    }
+
+    // socket
+    if (!hooking::hook_iat(target_module, "wsock32.dll",
+        reinterpret_cast<const char *>(23),
+        reinterpret_cast<hooking::function_ptr>(ipx_socket))) {
+        return false;
+    }
+
+    // WSAStartup
+    if (!hooking::hook_iat(target_module, "wsock32.dll",
+        reinterpret_cast<const char *>(115),
+        reinterpret_cast<hooking::function_ptr>(init))) {
+        return false;
+    }
+
+    return true;
+}
+
 extern "C" BOOL APIENTRY DllMain(HMODULE Module, DWORD CallReason, LPVOID Reserved)
 {
     UNREFERENCED_PARAMETER(Module);
-    UNREFERENCED_PARAMETER(CallReason);
     UNREFERENCED_PARAMETER(Reserved);
+
+    switch (CallReason) {
+    case DLL_PROCESS_ATTACH:
+        try {
+            auto modpath = util::get_module_filename(NULL);
+            auto modname = util::path_filename(modpath);
+
+            if (_wcsicmp(modname.c_str(), L"gamemd.exe") == 0) {
+                if (!hook_wsock32(GetModuleHandleW(NULL))) {
+                    return FALSE;
+                }
+            }
+        } catch (std::exception&) {
+            return FALSE;
+        }
+        break;
+    }
 
     return TRUE;
 }

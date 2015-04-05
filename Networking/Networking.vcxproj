@@ -91,6 +91,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="config.h" />
+    <ClInclude Include="ipx.h" />
     <ClInclude Include="netadapter.h" />
     <ClInclude Include="netaddress.h" />
     <ClInclude Include="resources.h" />
@@ -122,6 +123,12 @@
     <None Include="module.def" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hooking\Hooking.vcxproj">
+      <Project>{a3ce65f1-30d6-47d8-8152-65fb84b64a2d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\NativeUtilities\NativeUtilities.vcxproj">
+      <Project>{20729267-b7d9-41b2-a26c-4eab3772ada4}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\YuriExtension\YuriExtension.vcxproj">
       <Project>{ba8d3756-9b6d-436f-ae3f-2bac194f0422}</Project>
     </ProjectReference>
