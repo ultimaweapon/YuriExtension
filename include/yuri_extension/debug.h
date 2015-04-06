@@ -16,25 +16,32 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-// Compilation Controlling Header Files:
-
-#include "targetver.h"
-
-// Windows Header Files:
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
-#include <shlwapi.h>
-
-// C++ Header Files:
+#include "api.h"
 
 #include <sstream>
 #include <string>
-#include <memory>
-#include <exception>
 
-// C Header Files:
+namespace yuriext {
+    enum class debug_message_category {
+        core,
+        networking
+    };
 
-#include <cstring>
+    enum class debug_message_type {
+        info,
+        warning,
+        error
+    };
+
+    yuriext_api void debug_message(debug_message_category cat,
+        debug_message_type type, const std::wstring& msg);
+
+    template<typename... Args>
+    void debug_message(debug_message_category cat, debug_message_type type,
+        Args... args)
+    {
+        std::wostringstream buf;
+        int dummy[sizeof...(Args)] = {(buf << args, 0)...};
+        debug_message(cat, type, buf.str());
+    }
+} // namespace yuriext

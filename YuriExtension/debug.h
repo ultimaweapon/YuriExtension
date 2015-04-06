@@ -16,25 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-// Compilation Controlling Header Files:
+#include <yuri_extension/debug.h>
 
-#include "targetver.h"
-
-// Windows Header Files:
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-
-#include <shlwapi.h>
-
-// C++ Header Files:
-
-#include <sstream>
-#include <string>
-#include <memory>
-#include <exception>
-
-// C Header Files:
-
-#include <cstring>
+void init_debug();
+void term_debug();

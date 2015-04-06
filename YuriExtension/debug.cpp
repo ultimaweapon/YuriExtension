@@ -14,27 +14,33 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
-#pragma once
+#include "stdafx.h"
+#include "debug.h"
 
-// Compilation Controlling Header Files:
+static HANDLE console = INVALID_HANDLE_VALUE;
 
-#include "targetver.h"
+void yuriext::debug_message(debug_message_category cat, debug_message_type type,
+    const std::wstring& msg)
+{
+}
 
-// Windows Header Files:
+void init_debug()
+{
+    console = CreateFileW(L"\\\\.\\pipe\\yuri-extension-debug-console",
+        GENERIC_WRITE, 0, NULL, OPEN_EXISTING,
+        FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED, NULL);
 
-#define WIN32_LEAN_AND_MEAN
+    if (console == INVALID_HANDLE_VALUE) {
+        return;
+    }
+}
 
-#include <windows.h>
+void term_debug()
+{
+    if (console == INVALID_HANDLE_VALUE) {
+        return;
+    }
 
-#include <shlwapi.h>
-
-// C++ Header Files:
-
-#include <sstream>
-#include <string>
-#include <memory>
-#include <exception>
-
-// C Header Files:
-
-#include <cstring>
+    CloseHandle(console);
+    console = INVALID_HANDLE_VALUE;
+}
