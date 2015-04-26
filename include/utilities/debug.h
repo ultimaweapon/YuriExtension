@@ -16,7 +16,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include <yuri_extension/debug.h>
+#include "api.h"
 
-void init_debug();
-void term_debug();
+#include <sstream>
+#include <string>
+
+namespace util {
+    utilapi void debug_message(const std::string& msg);
+
+    template<typename... Args>
+    void debug_message(Args... args)
+    {
+        std::ostringstream buf;
+        int dummy[sizeof...(Args)] = {(buf << args, 0)...};
+        debug_message(buf.str());
+    }
+} // namespace util

@@ -9,8 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Configurations", "Configura
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BroadcastRelay", "BroadcastRelay\BroadcastRelay.vcxproj", "{B132BD40-5A72-4A4E-B017-0B1B442EFC9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebugConsole", "DebugConsole\DebugConsole.csproj", "{BE66BD3B-DCF5-4724-BF20-9A91CFCA466A}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YuriExtension", "YuriExtension\YuriExtension.vcxproj", "{BA8D3756-9B6D-436F-AE3F-2BAC194F0422}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hooking", "Hooking\Hooking.vcxproj", "{A3CE65F1-30D6-47D8-8152-65FB84B64A2D}"
@@ -35,10 +33,6 @@ Global
 		{B132BD40-5A72-4A4E-B017-0B1B442EFC9B}.Debug|Win32.Build.0 = Debug|Win32
 		{B132BD40-5A72-4A4E-B017-0B1B442EFC9B}.Release|Win32.ActiveCfg = Release|Win32
 		{B132BD40-5A72-4A4E-B017-0B1B442EFC9B}.Release|Win32.Build.0 = Release|Win32
-		{BE66BD3B-DCF5-4724-BF20-9A91CFCA466A}.Debug|Win32.ActiveCfg = Debug|x86
-		{BE66BD3B-DCF5-4724-BF20-9A91CFCA466A}.Debug|Win32.Build.0 = Debug|x86
-		{BE66BD3B-DCF5-4724-BF20-9A91CFCA466A}.Release|Win32.ActiveCfg = Release|x86
-		{BE66BD3B-DCF5-4724-BF20-9A91CFCA466A}.Release|Win32.Build.0 = Release|x86
 		{BA8D3756-9B6D-436F-AE3F-2BAC194F0422}.Debug|Win32.ActiveCfg = Debug|Win32
 		{BA8D3756-9B6D-436F-AE3F-2BAC194F0422}.Debug|Win32.Build.0 = Debug|Win32
 		{BA8D3756-9B6D-436F-AE3F-2BAC194F0422}.Release|Win32.ActiveCfg = Release|Win32

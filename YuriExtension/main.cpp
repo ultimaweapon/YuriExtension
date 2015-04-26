@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
-#include "debug.h"
 #include "config.h"
 
 #include <yuri_extension.h>
@@ -37,7 +36,6 @@ static void init()
 
     try {
         init_config();
-        init_debug();
     } catch (std::exception&) {
         initerr = std::current_exception();
         initcnt--;
@@ -52,7 +50,6 @@ static void term()
         return;
     }
 
-    term_debug();
     term_config();
 }
 

@@ -15,32 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ////////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
-#include "debug.h"
 
-static HANDLE console = INVALID_HANDLE_VALUE;
+#include <utilities/debug.h>
 
-void yuriext::debug_message(debug_message_category cat, debug_message_type type,
-    const std::wstring& msg)
+void util::debug_message(const std::string& msg)
 {
-}
-
-void init_debug()
-{
-    console = CreateFileW(L"\\\\.\\pipe\\yuri-extension-debug-console",
-        GENERIC_WRITE, 0, NULL, OPEN_EXISTING,
-        FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED, NULL);
-
-    if (console == INVALID_HANDLE_VALUE) {
-        return;
-    }
-}
-
-void term_debug()
-{
-    if (console == INVALID_HANDLE_VALUE) {
-        return;
-    }
-
-    CloseHandle(console);
-    console = INVALID_HANDLE_VALUE;
+    OutputDebugStringA(msg.c_str());
 }
